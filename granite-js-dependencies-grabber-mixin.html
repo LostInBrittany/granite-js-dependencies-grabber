@@ -10,7 +10,7 @@
 <script>
   /* eslint no-unused-vars: "off" */
   /*
-   * A mixin to ensure that non-componentalized mon-modularized external  
+   * A mixin to ensure that non-componentalized mon-modularized external
    * JavaScript libraries are loader once and only once, and in the right order,
    * importing all the needed dependencies only if they aren't already loaded
    *
@@ -48,7 +48,7 @@
 
     /**
      * @param {string} name
-     * @param {string} url 
+     * @param {string} url
      * @return {void}
      * @private
      */
@@ -79,43 +79,46 @@
 
     /**
      * @param {string} name
-     * @param {string} url 
+     * @param {string} url
      * @param {function} resolve
      * @return {void}
      * @private
-     */    
+     */
     _loadDependency(name, url, resolve) {
       var script = document.createElement('script');
       script.src = this.resolveUrl(url);
       script.onload = () => {
-        if (this.debug) { console.log('[GraniteJsDependenciesGrabberMixin] _loadDependency - got', name); }
-        this.history += `_loadDependency - got ${name} <br>`;
-        this.dispatchEvent(new CustomEvent('dependency-is-ready',
-          {detail: {name: name, url: url}}));
-        resolve();
+        if (this.debug) { console.log('[GraniteJsDependenciesGrabberMixin] _loadDependency - loaded', name); }
+        this.history += `_loadDependency - loaded ${name} <br>`;
+        this._waitToLoadDependency(name, url, resolve);
       };
       document.body.appendChild(script);
     }
 
     /**
      * @param {string} name
-     * @param {string} url 
+     * @param {string} url
      * @param {function} resolve
      * @return {void}
      * @private
-     */    
+     */
     _waitToLoadDependency(name, url, resolve) {
-      if (typeof window[name] === 'undefined') {
-        if (this.debug) { console.log('[GraniteJsDependenciesGrabberMixin] _waitToLoadDependency - got', name); }
-        this.history += `_waitToLoadDependency - got ${name} <br>`;
-        this.dispatchEvent(new CustomEvent('dependency-is-ready',
-          {detail: {name: name, url: url}}));
-        resolve();
-      } else {
-        window.setTimeout( () => {
-          this._waitToLoadDependency(name, url, resolve);
-        }, 5);
-      }
+      let namespace = window;
+      name.split('.').forEach((item) => {
+        if (typeof namespace[item] == undefined) {
+          window.setTimeout( () => {
+            this._waitToLoadDependency(name, url, resolve);
+          }, 5);
+          return;
+        }
+        namespace = namespace[item];
+      });
+
+      if (this.debug) { console.log('[GraniteJsDependenciesGrabberMixin] _waitToLoadDependency - got', name); }
+      this.history += `_waitToLoadDependency - got ${name} <br>`;
+      this.dispatchEvent(new CustomEvent('dependency-is-ready',
+        {detail: {name: name, url: url}}));
+      resolve();
     }
   };
 </script>
