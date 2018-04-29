@@ -46,6 +46,20 @@
       return () => { return new Promise(resolve); };
     }
 
+
+    _namespaceExists(name) {
+      let namespace = window;
+      let splittedName = name.split('.');
+      for (let i in splittedName) { // eslint-disable-line guard-for-in
+        let item = splittedName[i];
+        if (!namespace[item]) {
+          return false;
+        }
+        namespace = namespace[item];
+      }
+      return true;
+    }
+
     /**
      * @param {string} name
      * @param {string} url
@@ -54,7 +68,7 @@
      */
     _getDependencyPromiseResolve(name, url) {
       return (resolve) => {
-        if (typeof window[name] === 'undefined') {
+        if (!this._namespaceExists(name)) {
           if (this.debug) {
             console.log('[GraniteJsDependenciesGrabberMixin] _getDependency - unmet', name);
           }
@@ -104,15 +118,13 @@
      */
     _waitToLoadDependency(name, url, resolve) {
       let namespace = window;
-      name.split('.').forEach((item) => {
-        if (typeof namespace[item] == undefined) {
+  
+      if (!this._namespaceExists(name)) {
           window.setTimeout( () => {
             this._waitToLoadDependency(name, url, resolve);
           }, 5);
           return;
-        }
-        namespace = namespace[item];
-      });
+      }
 
       if (this.debug) { console.log('[GraniteJsDependenciesGrabberMixin] _waitToLoadDependency - got', name); }
       this.history += `_waitToLoadDependency - got ${name} <br>`;
