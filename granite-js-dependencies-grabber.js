@@ -2,6 +2,7 @@ import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { GraniteJsDependenciesGrabberMixin } from './granite-js-dependencies-grabber-mixin.js';
 /* global GraniteJsDependenciesGrabberMixin */
 /* eslint new-cap:  ["error", { "capIsNewExceptions": ["GraniteJsDependenciesGrabberMixin"] }] */
+
 /**
  * `granite-js-dependencies-grabber`
  * A custom element to ensure that non-componentalized mon-modularized external

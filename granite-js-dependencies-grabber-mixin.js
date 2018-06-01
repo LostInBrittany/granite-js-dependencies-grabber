@@ -3,12 +3,7 @@
 @copyright Horacio Gonzalez <horacio.gonzalez@gmail.com> 2017
 @author Horacio Gonzalez <horacio.gonzalez@gmail.com>
 */
-/* Load the Polymer.Element base class */
-/*
-  FIXME(polymer-modulizer): the above comments were extracted
-  from HTML and may be out of place here. Review them and
-  then delete this comment!
-*/
+
 import '@polymer/polymer/polymer-element.js';
 
 /* eslint no-unused-vars: "off" */

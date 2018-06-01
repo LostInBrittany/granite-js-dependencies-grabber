@@ -1,7 +1,7 @@
 {
   "description": "A custom element to ensure that non-componentalized mon-modularized external JavaScript libraries are loader once and only once, and in the right order",
   "name": "@granite-elements/granite-js-dependencies-grabber",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "resolutions": {
     "inherits": "2.0.3",
     "samsam": "1.1.3",
