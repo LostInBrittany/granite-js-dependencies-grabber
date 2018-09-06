@@ -1,3 +1,5 @@
+[![Published on Vaadin  Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/LostInBrittanygranite-file-saver)
+[![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/LostInBrittanygranite-file-saver.svg)](https://vaadin.com/directory/component/LostInBrittanygranite-file-saver)
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/LostInBrittany/granite-js-dependency-grabber)
 
 # granite-js-dependency-grabber
